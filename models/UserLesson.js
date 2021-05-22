@@ -5,11 +5,6 @@ module.exports = async (DataTypes, sequelize) => {
             primaryKey: true,
             defaultValue: DataTypes.UUIDV4()
         },
-        count: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 1
-        },
         text: {
             type: DataTypes.TEXT
         }

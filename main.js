@@ -7,7 +7,6 @@ const SubscriptionModel = require('./models/SubscriptionModel');
 const UserLessonModel = require('./models/UserLesson');
 const CartModel = require('./models/CartModel');
 const OrderModel = require('./models/OrderModel');
-const OrderedCoursesModel = require('./models/OrderedCoursesModel');
 
 require('dotenv').config();
 const URL = process.env.URL;
@@ -31,8 +30,7 @@ async function main () {
         db.userlessons = await UserLessonModel(DataTypes, sequelize);
         db.cart = await CartModel(DataTypes, sequelize);
         db.orders = await OrderModel(DataTypes, sequelize);
-        db.orderedCourses = await OrderedCoursesModel(DataTypes, sequelize);
-        
+
         sequelize.sync({ force: false });
 
     } catch (e) {
