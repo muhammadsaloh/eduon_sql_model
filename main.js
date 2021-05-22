@@ -8,13 +8,16 @@ const UserLessonModel = require('./models/UserLesson');
 const CartModel = require('./models/CartModel');
 const OrderModel = require('./models/OrderModel');
 
+// Cyber Security
 require('dotenv').config();
 const URL = process.env.URL;
 
+// Sequelize 
 const sequelize = new Sequelize(URL, {
     logging: (log) => console.log(`SQL: ${log}`)
 }); 
 
+// connected
 async function main () {
     try {
         await sequelize.authenticate();
@@ -30,6 +33,67 @@ async function main () {
         db.userlessons = await UserLessonModel(DataTypes, sequelize);
         db.cart = await CartModel(DataTypes, sequelize);
         db.orders = await OrderModel(DataTypes, sequelize);
+
+        // References
+
+        db.categories.hasMany(db.courses, {
+            foreign_key: {
+                name: "category_id",
+                allowNull: false
+            }
+        });
+
+        
+
+        db.courses.belongsTo(db.categories, {
+            foreign_key: {
+                name: "category_id",
+                allowNull: false
+            }
+        });
+
+
+        db.users.hasMany(db.cart, {
+            foreign_key: {
+                name: "user_id",
+                allowNull: "false"
+            }
+        });
+
+        db.cart.belongsTo(db.users, {
+            foreign_key: {
+                name: "user_id",
+                allowNull: false
+            }
+        });
+
+        db.courses.hasMany(db.cart, {
+            foreign_key: {
+                name: "course_id",
+                allowNull: false
+            }
+        });
+
+        db.cart.belongsTo(db.courses, {
+            foreign_key: {
+                name: "course_id",
+                allowNull: false
+            }
+        });
+
+        db.users.hasMany(db.orders, {
+            foreign_key: {
+                name: 'user_id',
+                allowNull: false
+            }
+        });
+
+        db.orders.belongsTo(db.users, {
+            foreign_key: {
+                name: 'user_id',
+                allowNull: false
+            }
+        });
 
         sequelize.sync({ force: false });
 

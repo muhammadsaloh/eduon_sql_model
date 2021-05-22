@@ -22,6 +22,10 @@ module.exports = async (DataTypes, sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1
+        },
+        video_url: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     });
 };
